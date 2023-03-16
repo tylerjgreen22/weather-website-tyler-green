@@ -1,0 +1,34 @@
+/* General Styling */
+body {
+    background-color: gray;
+    color: white;
+    font-size: 5rem;
+}
+
+/* Card */
+.card {
+    width: 100%;
+}
+
+/* Icon */
+.icon-spacer {
+    margin-left: .5em;
+}
+
+/* Delete button */
+.delete-city {
+    margin-left: .5em;
+    color: red;
+    text-decoration: none;
+}
+
+.delete-city:hover {
+    cursor: pointer;
+    opacity: 50%;
+}
+
+/* City name  */
+.city-name:hover {
+    cursor: pointer;
+    opacity: 50%
+}
