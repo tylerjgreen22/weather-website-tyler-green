@@ -15,18 +15,14 @@ const getCities = function () {
     data.forEach(element => {
         cities.push(new City(element.name, element.main.temp, element.main.humidity, element.weather[0].main, element.sys.country, element.weather[0].id));
     })
-}
 
-document.addEventListener('DOMContentLoaded', getCities);
-
-// Creates the city section by making a city section UI component for each city
-const setCitySection = function () {
     cities.forEach((city) => {
         Ui.createCity(city);
     });
+
 }
 
-document.addEventListener('DOMContentLoaded', setCitySection);
+document.addEventListener('DOMContentLoaded', getCities);
 
 // Adds a city by taking the value from the searchbar, and adding it to the cities in local storage using the api method get city. 
 // Splits the search value so that a country can be specified
@@ -48,7 +44,6 @@ const addCity = async function () {
     }
     Ui.emptyCitySection();
     getCities();
-    setCitySection();
 }
 
 const search = document.getElementById("search");
