@@ -8,7 +8,7 @@ import { Ls } from "./Ls.js";
 // Arrray to hold all of the cities
 let cities = [];
 
-// Gets the data of each city from local storage and creates a city object that is then push onto the cities array
+// Gets the data of each city from local storage and creates a city object that is then push onto the cities array. Then creates a UI element for each city
 const getCities = function () {
     let data = Ls.getFromLs();
 
