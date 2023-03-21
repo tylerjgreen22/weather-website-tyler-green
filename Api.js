@@ -23,7 +23,7 @@ export class Api {
 
     // Makes a call to the Openweather Geo API to get the lat and lon of a given city
     static async getCity(cityName, country) {
-        const apiKey = '22612070b9aed2863e5dfe56c04b0759';
+        const apiKey = API_KEY;
         let api;
         if (country) {
             api = `https://api.openweathermap.org/geo/1.0/direct?q=${cityName},${country}&limit=5&appid=${apiKey}`;
