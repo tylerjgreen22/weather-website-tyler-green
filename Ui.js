@@ -11,7 +11,7 @@ export class Ui {
 
         const cityName = document.createElement("p");
         cityName.className = "city-name";
-        cityName.textContent = `${city.name}, ${city.country}`;
+        cityName.textContent = `${city.name}, ${city.state}, ${city.country}`;
         div.appendChild(cityName);
 
         const cityTemp = document.createElement("p");
@@ -51,7 +51,7 @@ export class Ui {
 
         const cityName = document.createElement("h3");
         cityName.className = "card-title";
-        cityName.textContent = `${city.name}, ${city.country}`;;
+        cityName.textContent = `${city.name}, ${city.state}, ${city.country}`;;
         cityName.appendChild(icon);
         div.appendChild(cityName);
 

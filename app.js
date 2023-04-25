@@ -13,7 +13,7 @@ const getCities = function () {
     let data = Ls.getFromLs();
 
     data.forEach(element => {
-        cities.push(new City(element.name, element.main.temp, element.main.humidity, element.weather[0].main, element.sys.country, element.weather[0].id));
+        cities.push(new City(element.name, element.main.temp, element.main.humidity, element.weather[0].main, element.sys.country, element.weather[0].id, element.state));
     })
 
     cities.forEach((city) => {
@@ -31,7 +31,7 @@ const addCity = async function () {
     const searchVal = document.getElementById("searchbar");
     try {
         const searchValList = searchVal.value.split(",");
-        await Api.getCity(searchValList[0], searchValList[1]);
+        await Api.getCity(searchValList[0], searchValList[1], searchValList[2]);
         searchVal.value = "";
     } catch (error) {
         console.error(error);
@@ -57,20 +57,29 @@ const citySectionOptions = function (e) {
         removeCity(target);
     } else if (e.target.className === "city-name") {
         // This is split like this so that the load city card can find the city name properly as the country is not included in the city name
-        const target = e.target.innerText;
+        let target = e.target.innerText;
         const targetList = target.split(',');
+        let country = targetList[targetList.length - 1].trim()
+        let state = targetList[targetList.length - 2].trim()
         // This is needed for if a city has multiple comma seperated names in its name. It recombines the city name, up to the country but leaves off the country
         // That way when the load city card gets the target name, it can properly find it
-        if (targetList.length > 2) {
+
+        if (targetList.length > 3) {
             let targetString = "";
-            for (let i = 0; i < targetList.length - 1; i++) {
+            for (let i = 0; i < targetList.length - 2; i++) {
                 targetString += `${targetList[i]},`;
             }
             targetString = targetString.slice(0, - 1);
-            loadCityCard(targetString);
-            return
+            loadCityCard(targetString, state, country);
+        } else {
+            target = targetList[0]
+            loadCityCard(target, state, country)
         }
-        loadCityCard(targetList[0])
+
+
+
+
+
     }
 }
 
@@ -78,13 +87,22 @@ const citySectionOptions = function (e) {
 const removeCity = function (target) {
     const cityName = target.firstChild.textContent;
     const cityNameList = cityName.split(',');
-    Ls.removeFromLs(cityNameList[0]);
+    if (cityNameList.length > 3) {
+        let targetString = "";
+        for (let i = 0; i < cityNameList.length - 2; i++) {
+            targetString += `${cityNameList[i]},`;
+        }
+        targetString = targetString.slice(0, - 1);
+        Ls.removeFromLs(targetString);
+    } else {
+        Ls.removeFromLs(cityNameList[0]);
+    }
     target.remove();
 }
 
 // This will find the targeted city in the array of cities and create a card for it
-const loadCityCard = function (target) {
-    const targetCity = cities.find(city => city.name === target);
+const loadCityCard = function (target, state, country) {
+    const targetCity = cities.find(city => city.name === target && city.country === country && city.state === state);
     Ui.createCityCard(targetCity);
 }
 
